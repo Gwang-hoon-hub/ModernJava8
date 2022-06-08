@@ -6,14 +6,25 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PasswordStrengthMeterTest {
+    private PasswordStrengthMeter meter = new PasswordStrengthMeter();
+    private void assertStrength(String password, PasswordStrength expStr){
+        PasswordStrength result = meter.meter(password);
+        assertEquals(expStr, result);
+    }
+
 
     @Test
     void meetsAllCriteria_Then_Strong(){
-        PasswordStrengthMeter meter = new PasswordStrengthMeter();
         PasswordStrength result = meter.meter("asdASD1@#");
         assertEquals(PasswordStrength.STRONG, result);
         PasswordStrength result2 = meter.meter("asd1@#ASD");
         assertEquals(PasswordStrength.STRONG, result2);
+    }
+
+    @Test
+    void refactoring_MeetsAllCriteria_Then_String(){
+        assertStrength("asdASD123!@#", PasswordStrength.STRONG);
+        assertStrength("asd1@#ASD", PasswordStrength.STRONG);
     }
 
     @Test
@@ -30,6 +41,10 @@ public class PasswordStrengthMeterTest {
         assertEquals(PasswordStrength.NORMAL, result);
     }
 
+    @Test
+    void nullInput_Then_Invalid(){
+        assertStrength(null, PasswordStrength.INVALID);
+    }
 
 
 }
