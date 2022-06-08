@@ -12,7 +12,6 @@ public class PasswordStrengthMeterTest {
         assertEquals(expStr, result);
     }
 
-
     @Test
     void meetsAllCriteria_Then_Strong(){
         PasswordStrength result = meter.meter("asdASD1@#");
@@ -28,7 +27,7 @@ public class PasswordStrengthMeterTest {
     }
 
     @Test
-    void meetsOtherCriteria_excect_for_Length_Then_Normal(){
+    void meetsOtherCriteria_excecpt_for_Length_Then_Normal(){
         PasswordStrengthMeter meter = new PasswordStrengthMeter();
         PasswordStrength result = meter.meter("a!@12S");
         assertEquals(PasswordStrength.NORMAL, result);
