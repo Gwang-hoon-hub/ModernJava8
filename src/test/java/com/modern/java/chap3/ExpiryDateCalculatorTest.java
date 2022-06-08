@@ -2,6 +2,7 @@ package com.modern.java.chap3;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
@@ -18,21 +19,51 @@ public class ExpiryDateCalculatorTest {
 
     @Test
     void 만원_납부하면_한달_뒤가_만료일이_됨(){
-        LocalDate billingDate = LocalDate.of(2019, 3, 1);
-        int payAmount = 10_000;
+//        LocalDate billingDate = LocalDate.of(2019, 3, 1);
+//        int payAmount = 10_000;
+//        ExpiryDateCalculator cal = new ExpiryDateCalculator();
+//        LocalDate expiryDate = cal.calculateExpiryDate(billingDate, payAmount);
+//
+//        assertEquals(LocalDate.of(2019,4,1), expiryDate);
+//
+//        // 예를 추가하면서 구현 일반화
+//        LocalDate billingDate2 = LocalDate.of(2019, 5, 5);
+//        int payAmount2 = 10_000;
+//
+//        ExpiryDateCalculator cal2 = new ExpiryDateCalculator();
+//        LocalDate expiryDate2 = cal2.calculateExpiryDate(billingDate2, payAmount2);
+//
+//        assertEquals(LocalDate.of(2019,6,5), expiryDate2);
+
+        assertExpiryDate(
+                LocalDate.of(2019,3,1), 10_000,
+                LocalDate.of(2019, 4, 1)
+        );
+        assertExpiryDate(
+                LocalDate.of(2019, 5, 5), 10_000,
+                LocalDate.of(2019, 6, 5)
+        );
+
+    }
+
+    private void assertExpiryDate(LocalDate billingDate,
+                                  int payAmount, LocalDate expectedExpiryDate){
         ExpiryDateCalculator cal = new ExpiryDateCalculator();
-        LocalDate expiryDate = cal.calculateExpiryDate(billingDate, payAmount);
+        LocalDate realExpiryDate = cal.calculateExpiryDate(billingDate, payAmount);
+        assertEquals(expectedExpiryDate, realExpiryDate);
+    }
 
-        assertEquals(LocalDate.of(2019,4,1), expiryDate);
+    @Test
+    void 납부일과_한달_뒤_일자가_같지_않음(){
+        assertExpiryDate(
+                LocalDate.of(2019,1,31), 10_000,
+                LocalDate.of(2019, 2, 28)
+        );
+        assertExpiryDate(
+                LocalDate.of(2019,5,31), 10_000,
+                LocalDate.of(2019, 6, 30)
+        );
 
-        // 예를 추가하면서 구현 일반화
-        LocalDate billingDate2 = LocalDate.of(2019, 5, 5);
-        int payAmount2 = 10_000;
-
-        ExpiryDateCalculator cal2 = new ExpiryDateCalculator();
-        LocalDate expiryDate2 = cal2.calculateExpiryDate(billingDate2, payAmount2);
-
-        assertEquals(LocalDate.of(2019,6,5), expiryDate2);
 
     }
 }
