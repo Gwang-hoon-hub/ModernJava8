@@ -8,5 +8,4 @@ public class ExpiryDateCalculator {
         return billingDate.plusMonths(1);
     }
 
-
 }
