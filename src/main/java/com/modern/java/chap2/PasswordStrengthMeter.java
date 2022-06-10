@@ -36,7 +36,6 @@ public class PasswordStrengthMeter {
         if(s.length() >= 8) metCounts++;
         if(meetsContainingNumberCriteria(s)) metCounts++;
         if(meetsContainingUppercaseCriteria(s)) metCounts++;
-
         return metCounts;
     }
 
