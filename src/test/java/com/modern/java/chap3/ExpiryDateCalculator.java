@@ -13,12 +13,16 @@ public class ExpiryDateCalculator {
             LocalDate candidateExp = payData.getBillingDate().plusMonths(addedMonths);
             if(payData.getFirstBillingDate().getDayOfMonth() !=
             candidateExp.getDayOfMonth()){
+                final int dayLenOfCandiMon =
+                        YearMonth.from(candidateExp).lengthOfMonth();
             // 첫 납부일과 이후 후보 납부 일자가 맞지 않는 경우
-                if(YearMonth.from(candidateExp).lengthOfMonth()<
+                if(dayLenOfCandiMon <
                 payData.getFirstBillingDate().getDayOfMonth()){
             // 2만원 이상의 금액을 납부했을 경우 첫 납부일과 만료일자가 다른 경우
-                    return candidateExp.withDayOfMonth(YearMonth.from(candidateExp).lengthOfMonth());
+                    return candidateExp.withDayOfMonth(dayLenOfCandiMon);
                 }
+                return candidateExp.withDayOfMonth(
+                        payData.getFirstBillingDate().getDayOfMonth());
             }
         }
         return payData.getBillingDate().plusMonths(addedMonths);
