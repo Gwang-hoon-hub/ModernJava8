@@ -42,7 +42,10 @@ public class ExpiryDateCalculatorTest {
                         .build(),
                 LocalDate.of(2019,4,1)
         );
+
         assertExpiryDate(
+                // 1월 31일 구독을 시작하면, 한 달 뒤인 2월 28일이 된다.
+                // 2월은 31일이 없기 때문에 그에 맞는 예외처리를 하는 프로그램을 작성해야 한다.
                 PayData.builder()
                         .billingDate(LocalDate.of(2019,1,31))
                         .payAmount(10_000)

@@ -11,6 +11,7 @@ public class ExpiryDateCalculator {
             return payData.getBillingDate().plusMonths(addedMonths);
         }
     }
+
     private LocalDate expiryDateUsingFirstBillingDate(PayData payData, int addedMonths){
         LocalDate candidateExp = payData.getBillingDate().plusMonths(addedMonths);
         if(!isSameDayMonth(payData.getFirstBillingDate(), candidateExp)){

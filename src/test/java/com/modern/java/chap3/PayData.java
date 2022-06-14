@@ -47,6 +47,5 @@ public class PayData {
         public PayData build(){
             return data;
         }
-
     }
 }
