@@ -125,6 +125,7 @@ public class ExpiryDateCalculatorTest {
                         .payAmount(30_000)
                         .build(),
                 LocalDate.of(2019,7,31)
+
         );
     }
 
