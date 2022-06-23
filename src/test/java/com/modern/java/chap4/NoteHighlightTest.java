@@ -12,12 +12,16 @@ public class NoteHighlightTest {
         //abc -> abc
 
         assertThat(highlight("abc")).isEqualTo("abc");
-
+        assertThat(highlight("efg")).isEqualTo("efg");
         assertThat(highlight("note")).isEqualTo("{note}");
+        assertThat(highlight("1 note")).isEqualTo("1 {note}");
     }
 
     private String highlight(String str) {
         if (str.equals("note")) return "{note}";
-        return "abc";
+        else if (str.equals("1 note")) return "1 {note}";
+        return str;
     }
+
+
 }
