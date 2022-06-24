@@ -25,12 +25,23 @@ public class NoteHighlightTest {
         if(idx == -1 ){
             return str;
         }
+        // if(isPreChNotSpace(str, idx) return str          --> 리팩토링을 위한 코드
+        boolean preChNotSpace = isPreChNotSpace(str, idx);
+        if(preChNotSpace) return str;
+        return str.replace("note", "{note}");
+    }
+
+    private boolean isPreChNotSpace(String str, int idx) {
+        boolean preChNotSpace = false;
         int preChIdx = idx - 1;
         if(preChIdx >= 0) {
             char pre = str.charAt(preChIdx);
-            if (IsNotSpace(pre)) return str;
+            if (IsNotSpace(pre)) {
+                preChNotSpace = true;
+
+            }
         }
-        return str.replace("note", "{note}");
+        return preChNotSpace;
     }
 
     private boolean IsNotSpace(char pre) {
