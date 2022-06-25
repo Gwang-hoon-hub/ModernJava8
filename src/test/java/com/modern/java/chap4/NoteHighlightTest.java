@@ -33,24 +33,13 @@ public class NoteHighlightTest {
     }
 
     private boolean isPostChNotSpace(String str, int idx) {
-        boolean postChNotSpace = false;
         int postChIdx = idx + "note".length();
-        if(postChIdx < str.length()) {  // idx 의 길이가 str의 길이보다 작아야 한다.
-            char post = str.charAt(postChIdx);
-            if (IsNotSpace(post)) {
-                postChNotSpace = true;
-            }
-        }
-        return postChNotSpace;
+        return postChIdx < str.length() && IsNotSpace(str.charAt(postChIdx)); // idx 의 길이가 str의 길이보다 작아야 한다.
     }
 
     private boolean isPreChNotSpace(String str, int idx) {
-        boolean preChNotSpace = false;
         int preChIdx = idx - 1;
-        if(preChIdx >= 0 && IsNotSpace(str.charAt(preChIdx))) {
-                preChNotSpace = true;
-        }
-        return preChNotSpace;
+        return preChIdx >= 0 && IsNotSpace(str.charAt(preChIdx));
     }
 
     private boolean IsNotSpace(char pre) {
