@@ -9,20 +9,19 @@ public class NoteHighlightTest {
 
     @Test
     void highlight(){
-        //abc -> abc
-
-        assertThat(highlight("abc")).isEqualTo("abc");
-        assertThat(highlight("efg")).isEqualTo("efg");
-        assertThat(highlight("note")).isEqualTo("{note}");
-        assertThat(highlight("1 note")).isEqualTo("1 {note}");
-        assertThat(highlight("1 note 2")).isEqualTo("1 {note} 2");
-        assertThat(highlight("keynote")).isEqualTo("keynote");
-        assertThat(highlight("ke1note")).isEqualTo("ke1note");
-        assertThat(highlight("yes note1")).isEqualTo("yes note1");
-        assertThat(highlight("yes notea")).isEqualTo("yes notea");
-        assertThat(highlight("no a note")).isEqualTo("no a {note}");
+//        assertThat(highlight("abc")).isEqualTo("abc");
+//        assertThat(highlight("efg")).isEqualTo("efg");
+//        assertThat(highlight("note")).isEqualTo("{note}");
+//        assertThat(highlight("1 note")).isEqualTo("1 {note}");
+//        assertThat(highlight("1 note 2")).isEqualTo("1 {note} 2");
+//        assertThat(highlight("keynote")).isEqualTo("keynote");
+//        assertThat(highlight("ke1note")).isEqualTo("ke1note");
+//        assertThat(highlight("yes note1")).isEqualTo("yes note1");
+//        assertThat(highlight("yes notea")).isEqualTo("yes notea");
+//        assertThat(highlight("no a note")).isEqualTo("no a {note}");
         assertThat(highlight("no a note note")).isEqualTo("no a {note} {note}");
         assertThat(highlight("no a note anote")).isEqualTo("no a {note} anote");    // error loop 만들어서 처리하기
+        assertThat(highlight("no a note anote aa note")).isEqualTo("no a {note} anote aa {note}");    // error loop 만들어서 처리하기
     }
 
     private String highlight(String str) {
@@ -35,14 +34,13 @@ public class NoteHighlightTest {
             }
             // if(isPreChNotSpace(str, idx) return str          --> 리팩토링을 위한 코드
             if (isPrePostChNotSpace(str, idx)) {
-                result += str;
-                break;
+                result += str.substring(0, idx + "note".length());
+                str += str.substring(idx + "note".length());
+            } else {
+                String preStr = idx > 0 ? str.substring(0, idx) : "";
+                result += preStr + "{note}";
+                str = str.substring(idx + "note".length());
             }
-//        if(isPreChNotSpace(str, idx)) return str;
-//        if(isPostChNotSpace(str, idx)) return str;
-            String preStr = idx > 0 ? str.substring(0, idx) : "";
-            result += preStr + "{note}";
-            str = str.substring(idx+"note".length());
         }
         return result;
     }
@@ -50,7 +48,6 @@ public class NoteHighlightTest {
     private boolean isPrePostChNotSpace(String str, int idx){ // 앞뒤로 공간이 있는 경우 그냥 str을 return 한다.
         int postChIdx = idx + "note".length();
         int preChIdx = idx - 1;
-
         return ((postChIdx < str.length() && IsNotSpace(str.charAt(postChIdx))) || (preChIdx >= 0 && IsNotSpace(str.charAt(preChIdx))));
     }
 
